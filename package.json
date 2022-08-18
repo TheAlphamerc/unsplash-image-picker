@@ -12,8 +12,14 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "build": "microbundle-crl --no-compress --format modern,cjs && npm run build:css && npm run export:assets",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build:css": "npm run tailwind:build && npm run css:build:custom && npm run sass && npm run css:build:cleanup",
+    "tailwind:build": "npx tailwindcss -i ./src/styles/tailwind.scss --config tailwind.config.js -o ./src/styles/tailwind.style.scss",
+    "css:build:custom": "npx sass --no-source-map src/styles/custom.scss:src/styles/custom.style.scss",
+    "sass": "npx sass  --no-source-map src/styles/index.scss dist/index.css",
+    "css:build:cleanup": "rm src/styles/custom.style.scss && rm src/styles/tailwind.style.scss",
+    "export:assets": "cp -r src/assets lib",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -36,6 +42,7 @@
     "@types/react-dom": "^16.9.7",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
+    "autoprefixer": "^9.8.8",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
@@ -51,13 +58,19 @@
     "gh-pages": "^2.2.0",
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
+    "tailwindcss": "^3.1.8",
     "typescript": "^3.7.5"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "unsplash-js": "^7.0.15"
+  }
 }

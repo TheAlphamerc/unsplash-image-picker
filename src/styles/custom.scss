@@ -1,0 +1,45 @@
+.Modal {
+    display: none;
+    &.active {
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        overflow: auto;
+        z-index: 300;
+        background-color: #3338;
+        display: block;
+    }
+    .Card {
+        margin: 1rem auto;
+    }
+}
+.spinner {
+    animation: spinner 0.75s ease-in-out infinite;
+}
+
+// ----------------- UnSplash Image Picker CSS Start -----------------
+.card:hover .card-img {
+    filter: brightness(75%);
+}
+
+@media (min-width: 500px) {
+    .card-columns {
+        column-count: 1 !important;
+    }
+}
+
+@media (min-width: 740px) {
+    .card-columns {
+        column-count: 2 !important;
+    }
+}
+
+@media (min-width: 1100px) {
+    .card-columns {
+        column-count: 3 !important;
+    }
+}
+
+// ----------------- UnSplash Image Picker CSS END -----------------
