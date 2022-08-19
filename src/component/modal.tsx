@@ -29,7 +29,7 @@ export default function Modal({
       })}
       {...props}
     >
-      <div className='flex' style={{ maxHeight: '90vh' }}>
+      <div className='flex h-full items-center'>
         <Card
           onClick={(e: any) => {
             // stop the card being closed when we click on inner divs

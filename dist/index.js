@@ -50,10 +50,7 @@ function Modal(_ref) {
       active: active
     })
   }, props), React__default.createElement("div", {
-    className: 'flex',
-    style: {
-      maxHeight: '90vh'
-    }
+    className: 'flex h-full items-center'
   }, React__default.createElement(Card, {
     onClick: function onClick(e) {
       if (active) {
@@ -86,85 +83,107 @@ function Card(_ref2) {
   }, children);
 }
 
+function UnsplashPhotoCard(_ref) {
+  var photo = _ref.photo,
+      _ref$onPhotoSelect = _ref.onPhotoSelect,
+      onPhotoSelect = _ref$onPhotoSelect === void 0 ? function (_) {} : _ref$onPhotoSelect;
+  return React__default.createElement("div", {
+    className: 'group relative h-60 sm:h-44 md:h-32 w-full place-items-center object-cover cursor-pointer border theme-border-default',
+    key: photo.id,
+    onClick: function onClick() {
+      return onPhotoSelect(photo);
+    }
+  }, React__default.createElement("img", {
+    className: 'card-img place-items-center w-full object-cover h-full rounded',
+    src: photo.urls.thumb,
+    alt: photo.alt_description
+  }), React__default.createElement("div", {
+    className: 'absolute top-0 right-0 left-0 bottom-0 invisible group-hover:visible group-hover:bg-black/20',
+    style: {
+      color: 'white'
+    }
+  }, React__default.createElement("div", {
+    className: 'flex space-x-1 items-center place-content-center justify-between m-2'
+  }, React__default.createElement("div", {
+    className: 'flex items-center space-x-1'
+  }, React__default.createElement("img", {
+    className: 'rounded-full h-6 w-6',
+    src: photo.user.profile_image.small,
+    alt: photo.user.username
+  }), React__default.createElement("h6", {
+    className: 'text-xs word-breaker'
+  }, photo.user.name)))));
+}
+
 function PhotoList(_ref) {
   var _ref$isLoading = _ref.isLoading,
       isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading,
+      _ref$isLoadingMore = _ref.isLoadingMore,
+      isLoadingMore = _ref$isLoadingMore === void 0 ? false : _ref$isLoadingMore,
       photoList = _ref.photoList,
+      total = _ref.total,
       onPhotoSelect = _ref.onPhotoSelect,
       loadMore = _ref.loadMore;
+  var listHeight = '700px';
+  var ref = React__default.useMemo(function () {
+    return React__default.createRef();
+  }, []);
+
+  var onScroll = function onScroll() {
+    if (ref.current) {
+      var _ref$current = ref.current,
+          scrollTop = _ref$current.scrollTop,
+          scrollHeight = _ref$current.scrollHeight,
+          clientHeight = _ref$current.clientHeight;
+
+      if (scrollHeight - (scrollTop + clientHeight) < 20) {
+        loadMore();
+      }
+    }
+  };
+
   return React__default.createElement("div", {
-    className: ''
-  }, React__default.createElement(InfiniteScroll, {
-    pageStart: 0,
-    loadMore: loadMore,
-    loader: React__default.createElement("p", {
-      key: '0'
-    }, "Loading more photos...")
+    className: 'Body'
   }, isLoading ? React__default.createElement("div", {
     className: 'flex items-center justify-center h-96'
-  }, "Loading photos") : React__default.createElement("div", {
-    className: 'card-columns mt-4'
-  }, photoList && photoList.map(function (pic) {
-    return React__default.createElement("div", {
-      className: 'group relative card border-0 mb-2 cursor-pointer',
-      key: pic.id,
-      onClick: function onClick() {
-        return onPhotoSelect(pic);
-      }
-    }, React__default.createElement("img", {
-      className: 'card-img',
-      src: pic.urls.small,
-      alt: pic.alt_description
-    }), React__default.createElement("div", {
-      className: 'absolute top-2 right-1 left-1 invisible group-hover:visible ',
-      style: {
-        color: 'white'
-      }
-    }, React__default.createElement("div", {
-      className: 'flex items-center justify-between'
-    }, React__default.createElement("div", {
-      className: 'flex items-center space-x-1'
-    }, React__default.createElement("img", {
-      className: 'rounded-full h-6 w-6',
-      src: pic.user.profile_image.small,
-      alt: pic.user.username
-    }), React__default.createElement("h6", {
-      className: 'text-xs'
-    }, pic.user.name)))));
-  })), photoList && photoList.length === 0 && React__default.createElement("div", {
-    className: 'h-96'
-  })));
+  }, React__default.createElement(Loader, null)) : React__default.createElement("div", null, Array.isArray(photoList) && photoList.length > 0 && React__default.createElement("div", {
+    className: 'PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4',
+    style: {
+      maxHeight: listHeight
+    },
+    ref: ref,
+    onScroll: onScroll
+  }, photoList.map(function (photo) {
+    return React__default.createElement(UnsplashPhotoCard, {
+      key: photo.id,
+      photo: photo,
+      onPhotoSelect: onPhotoSelect
+    });
+  })), Array.isArray(photoList) && photoList.length === 0 && total === 0 && React__default.createElement("div", {
+    className: 'flex items-center justify-center h-96'
+  }, "No photos found")), isLoadingMore && React__default.createElement("div", {
+    className: 'my-4 flex justify-center'
+  }, React__default.createElement(Loader, null)));
 }
 
-function InfiniteScroll(_ref2) {
-  var pageStart = _ref2.pageStart,
-      loadMore = _ref2.loadMore,
-      loader = _ref2.loader,
-      children = _ref2.children;
-
-  var _React$useState = React__default.useState(false),
-      isLoading = _React$useState[0];
-
-  var _React$useState2 = React__default.useState(pageStart),
-      page = _React$useState2[0];
-
-  React__default.useEffect(function () {
-    var callBack = function callBack() {
-      if (window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight) {
-        console.log('load more');
-
-        if (!isLoading) {
-          loadMore(page + 1);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', callBack);
-    return function () {
-      window.removeEventListener('scroll', callBack);
-    };
-  }, [pageStart]);
-  return React__default.createElement("div", null, children, isLoading && loader);
+function Loader() {
+  return React__default.createElement("svg", {
+    className: 'animate-spin -ml-1 mr-3 h-5 w-5 text-blue',
+    xmlns: 'http://www.w3.org/2000/svg',
+    fill: 'none',
+    viewBox: '0 0 24 24'
+  }, React__default.createElement("circle", {
+    className: 'opacity-25',
+    cx: '12',
+    cy: '12',
+    r: '10',
+    stroke: 'currentColor',
+    strokeWidth: '4'
+  }), React__default.createElement("path", {
+    className: 'opacity-75',
+    fill: 'currentColor',
+    d: 'M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+  }));
 }
 
 function SearchBar(_ref) {
@@ -202,57 +221,107 @@ function SearchBar(_ref) {
   }, "Search")))));
 }
 
-function UnsplashImagePickerComponent(_ref) {
+function ImagePicker(_ref) {
   var unsplash = _ref.unsplash,
       _ref$active = _ref.active,
       active = _ref$active === void 0 ? false : _ref$active,
+      _ref$initialPhotoSear = _ref.initialPhotoSearchQuery,
+      initialPhotoSearchQuery = _ref$initialPhotoSear === void 0 ? '' : _ref$initialPhotoSear,
       _ref$setActive = _ref.setActive,
-      setActive = _ref$setActive === void 0 ? function (_) {} : _ref$setActive;
+      setActive = _ref$setActive === void 0 ? function (_) {} : _ref$setActive,
+      _ref$onPhotoSelect = _ref.onPhotoSelect,
+      _onPhotoSelect = _ref$onPhotoSelect === void 0 ? function (_) {} : _ref$onPhotoSelect;
+
+  if (!active) {
+    return null;
+  }
 
   var _React$useState = React__default.useState([]),
       pics = _React$useState[0],
       setPics = _React$useState[1];
 
-  var _React$useState2 = React__default.useState(''),
-      query = _React$useState2[0],
-      setQuery = _React$useState2[1];
+  var _React$useState2 = React__default.useState(),
+      total = _React$useState2[0],
+      setTotal = _React$useState2[1];
 
-  var _React$useState3 = React__default.useState(false),
-      isLoading = _React$useState3[0],
-      setIsLoading = _React$useState3[1];
+  var _React$useState3 = React__default.useState(''),
+      query = _React$useState3[0],
+      setQuery = _React$useState3[1];
+
+  var _React$useState4 = React__default.useState(false),
+      isLoading = _React$useState4[0],
+      setIsLoading = _React$useState4[1];
+
+  var _React$useState5 = React__default.useState(false),
+      isLoadingMore = _React$useState5[0],
+      setIsLoadingMore = _React$useState5[1];
+
+  var _React$useState6 = React__default.useState(1),
+      page = _React$useState6[0],
+      setPage = _React$useState6[1];
 
   React__default.useEffect(function () {
-    fetchPhotos(1, query);
-  }, []);
+    if (initialPhotoSearchQuery !== '') {
+      setQuery(initialPhotoSearchQuery);
+      fetchPhotos(1, initialPhotoSearchQuery);
+    } else {
+      setTotal(0);
+    }
+  }, [initialPhotoSearchQuery]);
 
-  var fetchPhotos = function fetchPhotos(page, query) {
-    setIsLoading(true);
+  var fetchPhotos = function fetchPhotos(page, text, reset) {
+    if (reset === void 0) {
+      reset = false;
+    }
+
+    if (isLoading || isLoadingMore) {
+      return;
+    }
+
+    if (page === 1) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
+    }
+
+    setPage(page);
     unsplash.search.getPhotos({
       page: page,
-      perPage: 15,
-      query: query
+      perPage: 30,
+      query: text,
+      orientation: 'landscape'
     }).then(function (response) {
       var _response$response;
 
       var newPics = response === null || response === void 0 ? void 0 : (_response$response = response.response) === null || _response$response === void 0 ? void 0 : _response$response.results;
 
       if (newPics) {
-        setPics(newPics);
+        var mergedPics = newPics;
+
+        if (!reset) {
+          mergedPics = [].concat(pics, newPics);
+        }
+
+        setPics(mergedPics);
+        setTotal(response.response.total);
       }
 
       setIsLoading(false);
+      setIsLoadingMore(false);
     });
   };
 
   return React__default.createElement("div", {
-    className: 'UnsplashImagePickerComponent theme-bg-surface p-4 rounded'
+    className: 'ImagePicker theme-bg-surface rounded'
   }, React__default.createElement(Modal, {
     active: active,
     setActive: setActive,
     width: '840px',
     padding: false,
-    className: 'theme-bg-surface'
-  }, React__default.createElement("div", null, React__default.createElement("div", {
+    className: 'theme-bg-surface '
+  }, React__default.createElement("div", {
+    className: 'relative h-full'
+  }, React__default.createElement("div", {
     className: 'px-4 pt-4 font-bold text-lg theme-bg-surface'
   }, ' ', "Search image"), React__default.createElement("div", {
     className: 'shadow p-4 theme-bg-surface'
@@ -260,40 +329,50 @@ function UnsplashImagePickerComponent(_ref) {
     className: ''
   }, React__default.createElement(SearchBar, {
     onSearch: function onSearch(query) {
-      console.log(query);
       setPics([]);
-      fetchPhotos(1, query);
+      fetchPhotos(1, query, true);
     },
     query: query,
     setQuery: setQuery
-  }))), React__default.createElement("div", {
-    className: 'p-4 overflow-y-auto',
-    style: {
-      maxHeight: '600px'
-    }
-  }, React__default.createElement(PhotoList, {
+  }))), React__default.createElement(PhotoList, {
+    total: total,
     photoList: pics,
     isLoading: isLoading,
-    loadMore: fetchPhotos,
-    onPhotoSelect: function onPhotoSelect(photo) {
-      console.log('photo', photo);
+    isLoadingMore: isLoadingMore,
+    loadMore: function loadMore() {
+      fetchPhotos(page + 1, query);
+    },
+    onPhotoSelect: function (photo) {
+      try {
+        try {
+          _onPhotoSelect(photo);
+        } catch (error) {
+          console.log(error);
+        }
+
+        return Promise.resolve();
+      } catch (e) {
+        return Promise.reject(e);
+      }
     }
-  })))));
+  }))));
 }
 
 var UnsplashImagePicker = function UnsplashImagePicker(_ref) {
   var unsplashAccessKey = _ref.unsplashAccessKey,
       _ref$active = _ref.active,
       active = _ref$active === void 0 ? false : _ref$active,
+      initialPhotoSearchQuery = _ref.initialPhotoSearchQuery,
       _ref$setActive = _ref.setActive,
       setActive = _ref$setActive === void 0 ? function (_) {} : _ref$setActive;
   var unsplash = unsplashJs.createApi({
     accessKey: unsplashAccessKey
   });
-  return React.createElement(UnsplashImagePickerComponent, {
-    unsplash: unsplash,
+  return React.createElement(ImagePicker, {
     active: active,
-    setActive: setActive
+    setActive: setActive,
+    unsplash: unsplash,
+    initialPhotoSearchQuery: initialPhotoSearchQuery
   });
 };
 

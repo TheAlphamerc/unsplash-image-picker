@@ -1,9 +1,11 @@
 /// <reference types="react" />
 interface Props {
     isLoading?: boolean;
+    isLoadingMore?: boolean;
     photoList: Array<any>;
+    total?: number | undefined;
     onPhotoSelect: (photo: any) => void;
-    loadMore: (page: number, query: string) => void;
+    loadMore: () => void;
 }
-declare function PhotoList({ isLoading, photoList, onPhotoSelect, loadMore }: Props): JSX.Element;
+declare function PhotoList({ isLoading, isLoadingMore, photoList, total, onPhotoSelect, loadMore }: Props): JSX.Element;
 export default PhotoList;

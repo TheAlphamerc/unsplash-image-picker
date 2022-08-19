@@ -28,10 +28,7 @@ function Modal({
       active: active
     })
   }, props), React__default.createElement("div", {
-    className: 'flex',
-    style: {
-      maxHeight: '90vh'
-    }
+    className: 'flex h-full items-center'
   }, React__default.createElement(Card, {
     onClick: e => {
       if (active) {
@@ -63,79 +60,103 @@ function Card({
   }, children);
 }
 
+function UnsplashPhotoCard({
+  photo,
+  onPhotoSelect = _ => {}
+}) {
+  return React__default.createElement("div", {
+    className: 'group relative h-60 sm:h-44 md:h-32 w-full place-items-center object-cover cursor-pointer border theme-border-default',
+    key: photo.id,
+    onClick: () => onPhotoSelect(photo)
+  }, React__default.createElement("img", {
+    className: 'card-img place-items-center w-full object-cover h-full rounded',
+    src: photo.urls.thumb,
+    alt: photo.alt_description
+  }), React__default.createElement("div", {
+    className: 'absolute top-0 right-0 left-0 bottom-0 invisible group-hover:visible group-hover:bg-black/20',
+    style: {
+      color: 'white'
+    }
+  }, React__default.createElement("div", {
+    className: 'flex space-x-1 items-center place-content-center justify-between m-2'
+  }, React__default.createElement("div", {
+    className: 'flex items-center space-x-1'
+  }, React__default.createElement("img", {
+    className: 'rounded-full h-6 w-6',
+    src: photo.user.profile_image.small,
+    alt: photo.user.username
+  }), React__default.createElement("h6", {
+    className: 'text-xs word-breaker'
+  }, photo.user.name)))));
+}
+
 function PhotoList({
   isLoading = false,
+  isLoadingMore = false,
   photoList,
+  total,
   onPhotoSelect,
   loadMore
 }) {
+  const listHeight = '700px';
+  const ref = React__default.useMemo(() => React__default.createRef(), []);
+
+  const onScroll = () => {
+    if (ref.current) {
+      const {
+        scrollTop,
+        scrollHeight,
+        clientHeight
+      } = ref.current;
+
+      if (scrollHeight - (scrollTop + clientHeight) < 20) {
+        loadMore();
+      }
+    }
+  };
+
   return React__default.createElement("div", {
-    className: ''
-  }, React__default.createElement(InfiniteScroll, {
-    pageStart: 0,
-    loadMore: loadMore,
-    loader: React__default.createElement("p", {
-      key: '0'
-    }, "Loading more photos...")
+    className: 'Body'
   }, isLoading ? React__default.createElement("div", {
     className: 'flex items-center justify-center h-96'
-  }, "Loading photos") : React__default.createElement("div", {
-    className: 'card-columns mt-4'
-  }, photoList && photoList.map(pic => {
-    return React__default.createElement("div", {
-      className: 'group relative card border-0 mb-2 cursor-pointer',
-      key: pic.id,
-      onClick: () => onPhotoSelect(pic)
-    }, React__default.createElement("img", {
-      className: 'card-img',
-      src: pic.urls.small,
-      alt: pic.alt_description
-    }), React__default.createElement("div", {
-      className: 'absolute top-2 right-1 left-1 invisible group-hover:visible ',
-      style: {
-        color: 'white'
-      }
-    }, React__default.createElement("div", {
-      className: 'flex items-center justify-between'
-    }, React__default.createElement("div", {
-      className: 'flex items-center space-x-1'
-    }, React__default.createElement("img", {
-      className: 'rounded-full h-6 w-6',
-      src: pic.user.profile_image.small,
-      alt: pic.user.username
-    }), React__default.createElement("h6", {
-      className: 'text-xs'
-    }, pic.user.name)))));
-  })), photoList && photoList.length === 0 && React__default.createElement("div", {
-    className: 'h-96'
-  })));
+  }, React__default.createElement(Loader, null)) : React__default.createElement("div", null, Array.isArray(photoList) && photoList.length > 0 && React__default.createElement("div", {
+    className: 'PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4',
+    style: {
+      maxHeight: listHeight
+    },
+    ref: ref,
+    onScroll: onScroll
+  }, photoList.map(photo => {
+    return React__default.createElement(UnsplashPhotoCard, {
+      key: photo.id,
+      photo: photo,
+      onPhotoSelect: onPhotoSelect
+    });
+  })), Array.isArray(photoList) && photoList.length === 0 && total === 0 && React__default.createElement("div", {
+    className: 'flex items-center justify-center h-96'
+  }, "No photos found")), isLoadingMore && React__default.createElement("div", {
+    className: 'my-4 flex justify-center'
+  }, React__default.createElement(Loader, null)));
 }
 
-function InfiniteScroll({
-  pageStart,
-  loadMore,
-  loader,
-  children
-}) {
-  const [isLoading, setIsLoading] = React__default.useState(false);
-  const [page, setPage] = React__default.useState(pageStart);
-  React__default.useEffect(() => {
-    const callBack = () => {
-      if (window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight) {
-        console.log('load more');
-
-        if (!isLoading) {
-          loadMore(page + 1);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', callBack);
-    return () => {
-      window.removeEventListener('scroll', callBack);
-    };
-  }, [pageStart]);
-  return React__default.createElement("div", null, children, isLoading && loader);
+function Loader() {
+  return React__default.createElement("svg", {
+    className: 'animate-spin -ml-1 mr-3 h-5 w-5 text-blue',
+    xmlns: 'http://www.w3.org/2000/svg',
+    fill: 'none',
+    viewBox: '0 0 24 24'
+  }, React__default.createElement("circle", {
+    className: 'opacity-25',
+    cx: '12',
+    cy: '12',
+    r: '10',
+    stroke: 'currentColor',
+    strokeWidth: '4'
+  }), React__default.createElement("path", {
+    className: 'opacity-75',
+    fill: 'currentColor',
+    d: 'M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+  }));
 }
 
 function SearchBar({
@@ -166,46 +187,81 @@ function SearchBar({
   }, "Search")))));
 }
 
-function UnsplashImagePickerComponent({
+function ImagePicker({
   unsplash,
   active = false,
-  setActive = _ => {}
+  initialPhotoSearchQuery = '',
+  setActive = _ => {},
+  onPhotoSelect = _ => {}
 }) {
+  if (!active) {
+    return null;
+  }
+
   const [pics, setPics] = React__default.useState([]);
+  const [total, setTotal] = React__default.useState();
   const [query, setQuery] = React__default.useState('');
   const [isLoading, setIsLoading] = React__default.useState(false);
+  const [isLoadingMore, setIsLoadingMore] = React__default.useState(false);
+  const [page, setPage] = React__default.useState(1);
   React__default.useEffect(() => {
-    fetchPhotos(1, query);
-  }, []);
+    if (initialPhotoSearchQuery !== '') {
+      setQuery(initialPhotoSearchQuery);
+      fetchPhotos(1, initialPhotoSearchQuery);
+    } else {
+      setTotal(0);
+    }
+  }, [initialPhotoSearchQuery]);
 
-  const fetchPhotos = (page, query) => {
-    setIsLoading(true);
+  const fetchPhotos = (page, text, reset = false) => {
+    if (isLoading || isLoadingMore) {
+      return;
+    }
+
+    if (page === 1) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
+    }
+
+    setPage(page);
     unsplash.search.getPhotos({
       page: page,
-      perPage: 15,
-      query: query
+      perPage: 30,
+      query: text,
+      orientation: 'landscape'
     }).then(response => {
       var _response$response;
 
       const newPics = response === null || response === void 0 ? void 0 : (_response$response = response.response) === null || _response$response === void 0 ? void 0 : _response$response.results;
 
       if (newPics) {
-        setPics(newPics);
+        let mergedPics = newPics;
+
+        if (!reset) {
+          mergedPics = [...pics, ...newPics];
+        }
+
+        setPics(mergedPics);
+        setTotal(response.response.total);
       }
 
       setIsLoading(false);
+      setIsLoadingMore(false);
     });
   };
 
   return React__default.createElement("div", {
-    className: 'UnsplashImagePickerComponent theme-bg-surface p-4 rounded'
+    className: 'ImagePicker theme-bg-surface rounded'
   }, React__default.createElement(Modal, {
     active: active,
     setActive: setActive,
     width: '840px',
     padding: false,
-    className: 'theme-bg-surface'
-  }, React__default.createElement("div", null, React__default.createElement("div", {
+    className: 'theme-bg-surface '
+  }, React__default.createElement("div", {
+    className: 'relative h-full'
+  }, React__default.createElement("div", {
     className: 'px-4 pt-4 font-bold text-lg theme-bg-surface'
   }, ' ', "Search image"), React__default.createElement("div", {
     className: 'shadow p-4 theme-bg-surface'
@@ -213,39 +269,43 @@ function UnsplashImagePickerComponent({
     className: ''
   }, React__default.createElement(SearchBar, {
     onSearch: query => {
-      console.log(query);
       setPics([]);
-      fetchPhotos(1, query);
+      fetchPhotos(1, query, true);
     },
     query: query,
     setQuery: setQuery
-  }))), React__default.createElement("div", {
-    className: 'p-4 overflow-y-auto',
-    style: {
-      maxHeight: '600px'
-    }
-  }, React__default.createElement(PhotoList, {
+  }))), React__default.createElement(PhotoList, {
+    total: total,
     photoList: pics,
     isLoading: isLoading,
-    loadMore: fetchPhotos,
-    onPhotoSelect: photo => {
-      console.log('photo', photo);
+    isLoadingMore: isLoadingMore,
+    loadMore: () => {
+      fetchPhotos(page + 1, query);
+    },
+    onPhotoSelect: async photo => {
+      try {
+        onPhotoSelect(photo);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  })))));
+  }))));
 }
 
 const UnsplashImagePicker = ({
   unsplashAccessKey,
   active: _active = false,
+  initialPhotoSearchQuery,
   setActive: _setActive = _ => {}
 }) => {
   const unsplash = createApi({
     accessKey: unsplashAccessKey
   });
-  return createElement(UnsplashImagePickerComponent, {
-    unsplash: unsplash,
+  return createElement(ImagePicker, {
     active: _active,
-    setActive: _setActive
+    setActive: _setActive,
+    unsplash: unsplash,
+    initialPhotoSearchQuery: initialPhotoSearchQuery
   });
 };
 
