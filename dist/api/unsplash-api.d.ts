@@ -48,7 +48,7 @@ declare const unsplashApi: (accessKey: string) => {
             query: string;
         } & Pick<import("unsplash-js/dist/types/request").PaginationParams, "page" | "perPage"> & import("unsplash-js/dist/types/request").OrientationParam & {
             orderBy?: "relevant" | "latest" | undefined;
-            color?: "black" | "blue" | "green" | "magenta" | "orange" | "purple" | "red" | "teal" | "white" | "yellow" | "black_and_white" | undefined;
+            color?: "white" | "black" | "yellow" | "orange" | "red" | "purple" | "magenta" | "green" | "teal" | "blue" | "black_and_white" | undefined;
             lang?: import("unsplash-js").Language | undefined;
             contentFilter?: "high" | "low" | undefined;
             collectionIds?: string[] | undefined;

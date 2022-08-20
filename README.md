@@ -1,8 +1,12 @@
 # unsplash-image-picker
 
-> Provide component to search and choose image from unsplash images
+Provide component to search and choose image from unsplash images
 
 [![NPM](https://img.shields.io/npm/v/unsplash-image-picker.svg)](https://www.npmjs.com/package/unsplash-image-picker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FTheAlphamerc%2Funsplash-image-picker&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+## Live Demo
+
+[Demo](https://thealphamerc.github.io/unsplash-image-picker/)
 
 ## Install
 
@@ -12,14 +16,22 @@ npm install --save unsplash-image-picker
 
 ## Usage
 
+Package provide 2 component to search and choose image from unsplash images.
+
+- `UnsplashImagePicker` - search and choose image from unsplash images
+- `UnsplashImagePickerModal` - Display modal to search and choose image from unsplash images
+
+### How to use UnsplashImagePickerModal
+
 ```tsx
 import React, { Component } from 'react'
-import { UnsplashImagePicker } from 'unsplash-image-picker'
+import { UnsplashImagePickerModal } from 'unsplash-image-picker'
 import 'unsplash-image-picker/dist/index.css'
 
 const App = () => {
   const [active, setActive] = React.useState(false)
   const unsplashAccessKey = 'UNSPLASH_ACCESS_KEY'
+  const [photos, setActivePhotos] = React.useState<>([])
   return (
     <div>
       <button
@@ -29,10 +41,17 @@ const App = () => {
       >
         Show Picker
       </button>
-      <UnsplashImagePicker
+      <UnsplashImagePickerModal
         unsplashAccessKey={unsplashAccessKey}
         active={active}
         setActive={setActive}
+        initialPhotoSearchQuery=''
+        onPhotoSelect={(photo: any) => {
+          let list = (photos ?? []) as any[]
+          list.push(photo)
+          setActivePhotos(list)
+          setActive(false)
+        }}
       />
     </div>
   )
@@ -66,6 +85,8 @@ const App = () => {
 
 export default App
 ```
+
+> To get UNSPLASH_ACCESS_KEY, you can register at [unsplash.com](https://unsplash.com/join)
 
 ## License
 

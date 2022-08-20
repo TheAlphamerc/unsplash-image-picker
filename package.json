@@ -12,7 +12,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs && npm run build:css && npm run export:assets",
+    "build": "microbundle-crl --no-compress --format modern,cjs && npm run build:css",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "build:css": "npm run tailwind:build && npm run css:build:custom && npm run sass && npm run css:build:cleanup",
     "tailwind:build": "npx tailwindcss -i ./src/styles/tailwind.scss --config tailwind.config.js -o ./src/styles/tailwind.style.scss",
