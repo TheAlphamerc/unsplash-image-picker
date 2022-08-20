@@ -49,21 +49,19 @@ function Modal(_ref) {
     className: cx("Modal", {
       active: active
     })
-  }, props), React__default.createElement("div", {
-    className: 'flex h-full items-center'
-  }, React__default.createElement(Card, {
+  }, props), React__default.createElement(Card, {
     onClick: function onClick(e) {
       if (active) {
         e.stopPropagation();
       }
     },
     padding: padding,
-    className: "overflow-hidden ",
+    className: 'overflow-hidden h-full',
     style: {
       maxWidth: width,
       width: '100%'
     }
-  }, children)));
+  }, children));
 }
 
 function Card(_ref2) {
@@ -312,19 +310,19 @@ function ImagePicker(_ref) {
   };
 
   return React__default.createElement("div", {
-    className: 'ImagePicker theme-bg-surface rounded'
+    className: 'ImagePicker flex items-center bg-white rounded'
   }, React__default.createElement(Modal, {
     active: active,
     setActive: setActive,
     width: '840px',
     padding: false,
-    className: 'theme-bg-surface '
+    className: 'bg-white '
   }, React__default.createElement("div", {
-    className: 'relative h-full'
+    className: 'Picker relative h-full rounded'
   }, React__default.createElement("div", {
-    className: 'px-4 pt-4 font-bold text-lg theme-bg-surface'
+    className: 'px-4 pt-4 font-bold text-lg bg-white'
   }, ' ', "Search image"), React__default.createElement("div", {
-    className: 'shadow p-4 theme-bg-surface'
+    className: 'shadow p-4 bg-white'
   }, React__default.createElement("div", {
     className: ''
   }, React__default.createElement(SearchBar, {

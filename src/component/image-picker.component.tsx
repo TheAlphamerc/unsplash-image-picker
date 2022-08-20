@@ -78,20 +78,20 @@ export default function ImagePicker({
   }
 
   return (
-    <div className='ImagePicker theme-bg-surface rounded'>
+    <div className='ImagePicker flex items-center bg-white rounded'>
       <Modal
         active={active}
         setActive={setActive}
         width='840px'
         padding={false}
-        className='theme-bg-surface '
+        className='bg-white '
       >
-        <div className='relative h-full'>
-          <div className='px-4 pt-4 font-bold text-lg theme-bg-surface'>
+        <div className='Picker relative h-full rounded'>
+          <div className='px-4 pt-4 font-bold text-lg bg-white'>
             {' '}
             Search image
           </div>
-          <div className='shadow p-4 theme-bg-surface'>
+          <div className='shadow p-4 bg-white'>
             <div className=''>
               <SearchBar
                 onSearch={(query: string) => {

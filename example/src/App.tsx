@@ -20,7 +20,7 @@ const App = () => {
         unsplashAccessKey={unsplashAccessKey}
         active={active}
         setActive={setActive}
-        initialPhotoSearchQuery='nature'
+        initialPhotoSearchQuery=''
       />
     </div>
   )

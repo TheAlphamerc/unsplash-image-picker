@@ -29,21 +29,19 @@ export default function Modal({
       })}
       {...props}
     >
-      <div className='flex h-full items-center'>
-        <Card
-          onClick={(e: any) => {
-            // stop the card being closed when we click on inner divs
-            if (active) {
-              e.stopPropagation()
-            }
-          }}
-          padding={padding}
-          className={`overflow-hidden `}
-          style={{ maxWidth: width, width: '100%' }}
-        >
-          {children}
-        </Card>
-      </div>
+      <Card
+        onClick={(e: any) => {
+          // stop the card being closed when we click on inner divs
+          if (active) {
+            e.stopPropagation()
+          }
+        }}
+        padding={padding}
+        className='overflow-hidden h-full'
+        style={{ maxWidth: width, width: '100%' }}
+      >
+        {children}
+      </Card>
     </div>
   )
 }

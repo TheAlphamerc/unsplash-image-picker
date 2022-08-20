@@ -524,12 +524,23 @@ video {
   visibility: hidden;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
 
 .relative {
   position: relative;
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
 .top-0 {
@@ -546,6 +557,14 @@ video {
 
 .bottom-0 {
   bottom: 0px;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.z-40 {
+  z-index: 40;
 }
 
 .m-2 {
@@ -601,6 +620,10 @@ video {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.w-3\/4 {
+  width: 75%;
 }
 
 .w-full {
@@ -682,6 +705,10 @@ video {
   overflow-y: auto;
 }
 
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -701,6 +728,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255/var(--tw-bg-opacity));
+}
+
+.bg-black\/80 {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .bg-blue-500 {
@@ -772,6 +803,11 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-ring-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-shadow);
 }
 
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 .placeholder\:italic::-moz-placeholder {
   font-style: italic;
 }
@@ -839,7 +875,11 @@ video {
   display: block;
 }
 .Modal .Card {
-  margin: 1rem auto;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .spinner {
