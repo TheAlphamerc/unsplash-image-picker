@@ -1,6 +1,6 @@
 {
   "name": "unsplash-image-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provide component to search and choose image from unsplash images",
   "author": "thealphamerc",
   "license": "MIT",
