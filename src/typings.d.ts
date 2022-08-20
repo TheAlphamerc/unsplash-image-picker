@@ -8,7 +8,7 @@ declare module '*.css' {
 }
 
 interface SvgrComponent
-  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
+  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> { }
 
 declare module '*.svg' {
   const svgUrl: string

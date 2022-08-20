@@ -14,19 +14,19 @@ npm install --save unsplash-image-picker
 
 ```tsx
 import React, { Component } from 'react'
-
 import { UnsplashImagePicker } from 'unsplash-image-picker'
 import 'unsplash-image-picker/dist/index.css'
 
 const App = () => {
   const [active, setActive] = React.useState(false)
-  const unsplashAccessKey = 'dTUBUnPASfrsKOWYzVpAwvkr9Ks2MuY3i5YCvSqAxWQ'
+  const unsplashAccessKey = 'UNSPLASH_ACCESS_KEY'
   return (
     <div>
       <button
         onClick={() => {
           setActive(true)
-        }}>
+        }}
+      >
         Show Picker
       </button>
       <UnsplashImagePicker
@@ -37,6 +37,34 @@ const App = () => {
     </div>
   )
 }
+```
+
+### How to use UnSplashImagePicker
+
+```tsx
+import React from 'react'
+import 'unsplash-image-picker/dist/index.css'
+import { UnSplashImagePicker } from 'unsplash-image-picker'
+
+const App = () => {
+  const [photos, setPhotos] = React.useState<any[]>([])
+  const unsplashAccessKey = 'UNSPLASH_ACCESS_KEY'
+  return (
+    <div className='App '>
+      <UnSplashImagePicker
+        unsplashAccessKey={unsplashAccessKey}
+        initialPhotoSearchQuery=''
+        onPhotoSelect={(photo: any) => {
+          let list = (photos ?? []) as any[]
+          list.push(photo)
+          setPhotos(list)
+        }}
+      />
+    </div>
+  )
+}
+
+export default App
 ```
 
 ## License

@@ -1,34 +1,25 @@
 import React from 'react'
-import Modal from './modal'
+import { createApi } from 'unsplash-js'
 import PhotoList from './photo-list.component'
 import SearchBar from './search-bar.component'
 
 interface Props {
-  unsplash: any
-  active?: boolean
+  unsplashAccessKey: string
   initialPhotoSearchQuery?: string
-  setActive?: (active: boolean) => void
   onPhotoSelect?: (photo: any) => void
 }
 
 /**
  * @description ImagePicker search image from Unsplash.
+ * @param {string} unsplashAccessKey - The unsplash access key.
  * @param {string} initialPhotoSearchQuery - The initial search query.
- * @param {boolean} active - Whether the image picker is active.
- * @param {function} setActive - Function to set the image picker active.
  * @param {function} onPhotoSelect - Function to call when a photo is selected.
  */
 export default function ImagePicker({
-  unsplash,
-  active = false,
+  unsplashAccessKey,
   initialPhotoSearchQuery = '',
-  setActive = (_: boolean) => {},
   onPhotoSelect = (_: any) => {}
 }: Props) {
-  if (!active) {
-    return null
-  }
-
   const [pics, setPics] = React.useState<any[]>([])
   const [total, setTotal] = React.useState<number | undefined>()
   const [query, setQuery] = React.useState('')
@@ -36,14 +27,14 @@ export default function ImagePicker({
   const [isLoadingMore, setIsLoadingMore] = React.useState(false)
   const [page, setPage] = React.useState(1)
 
+  const unsplash = createApi({ accessKey: unsplashAccessKey })
+
   React.useEffect(() => {
     if (initialPhotoSearchQuery !== '') {
       setQuery(initialPhotoSearchQuery)
       fetchPhotos(1, initialPhotoSearchQuery)
-    } else {
-      setTotal(0)
     }
-  }, [initialPhotoSearchQuery])
+  }, [])
 
   const fetchPhotos = (page: number, text: string, reset = false) => {
     if (isLoading || isLoadingMore) {
@@ -78,14 +69,8 @@ export default function ImagePicker({
   }
 
   return (
-    <div className='ImagePicker flex items-center bg-white rounded'>
-      <Modal
-        active={active}
-        setActive={setActive}
-        width='840px'
-        padding={false}
-        className='bg-white '
-      >
+    <div className='ImagePicker items-center bg-white rounded'>
+      <div className='bg-white '>
         <div className='Picker relative h-full rounded'>
           <div className='px-4 pt-4 font-bold text-lg bg-white'>
             {' '}
@@ -123,7 +108,7 @@ export default function ImagePicker({
             }}
           />
         </div>
-      </Modal>
+      </div>
     </div>
   )
 }

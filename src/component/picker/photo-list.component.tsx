@@ -64,6 +64,9 @@ function PhotoList({
                 No photos found
               </div>
             )}
+          {!total && (
+            <div className='flex items-center justify-center h-96 text-gray-600' />
+          )}
         </div>
       )}
       {isLoadingMore && (

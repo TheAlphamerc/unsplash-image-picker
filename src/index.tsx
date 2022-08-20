@@ -1,28 +1,13 @@
-import * as React from 'react'
-import { createApi } from 'unsplash-js'
-import ImagePicker from './component/image-picker.component'
+import UnsplashImagePickerModal from './component/picker-modal/picker-modal'
+import UnSplashImagePicker from './component/picker/index'
 
-// export type UnSplashCreateAPI = typeof createApi
-interface Props {
-  unsplashAccessKey: string
-  active?: boolean
-  initialPhotoSearchQuery?: string
-  setActive?: (active: boolean) => void
-}
-
-export const UnsplashImagePicker = ({
-  unsplashAccessKey,
-  active = false,
-  initialPhotoSearchQuery,
-  setActive = (_: any) => {}
-}: Props) => {
-  const unsplash = createApi({ accessKey: unsplashAccessKey })
-  return (
-    <ImagePicker
-      active={active}
-      setActive={setActive}
-      unsplash={unsplash}
-      initialPhotoSearchQuery={initialPhotoSearchQuery}
-    />
-  )
-}
+/**
+ * @description UnSplashImagePicker search image from Unsplash.
+ * @param {string} unsplashAccessKey - The unsplash access key.
+ * @param {boolean} active - Whether the image picker is active.
+ * @param {string} initialPhotoSearchQuery - The initial search query.
+ * @param {function} setActive - Function to set the image picker active.
+ * @param {function} onPhotoSelect - Function to call when a photo is selected.
+ */
+export default UnsplashImagePickerModal
+export { UnSplashImagePicker }
