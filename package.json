@@ -1,6 +1,6 @@
 {
   "name": "unsplash-image-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Provide component to search and choose image from unsplash images",
   "author": "thealphamerc",
   "license": "MIT",
@@ -11,6 +11,17 @@
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "react",
+    "unsplash",
+    "image",
+    "picker",
+    "search",
+    "component",
+    "react-component",
+    "react-library",
+    "react-component-library"
+  ],
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs && npm run build:css",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
