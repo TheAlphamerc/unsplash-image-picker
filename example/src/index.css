@@ -10,10 +10,48 @@ body {
 }
 
 .App{
-  height: 100vh;
+    height: 100vh;
+    display: flex;
+    margin: auto;
+    align-content: space-around;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.Gallery {
+  column-count: 4;
+  max-width: 1000px;
+  margin: 10px auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.Gallery>img {
+  flex: 100%;
+  margin-top: 1rem;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 700px) {
+  .Gallery {
+    column-count: 3;
+    margin: 1rem;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .Gallery {
+    column-count: 1;
+    padding: 0 auto;
+    overflow-y: auto;
+  }
 }
