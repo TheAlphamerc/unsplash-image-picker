@@ -72,7 +72,7 @@ export default function ImagePicker({
     <div className='ImagePicker items-center bg-white rounded'>
       <div className='bg-white '>
         <div className='Picker relative h-full rounded'>
-          <div className='px-4 pt-4 font-bold text-lg bg-white'>
+          <div className='px-4 pt-4 font-bold text-lg bg-white '>
             {' '}
             Search image
           </div>

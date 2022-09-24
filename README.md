@@ -6,7 +6,7 @@ Provide component to search and choose image from unsplash images
 
 ## Live Demo
 
-For live package demo click [Here](https://thealphamerc.github.io/unsplash-image-picker/)
+[Live Demo](https://thealphamerc.github.io/unsplash-image-picker/) [Code Sandbox](https://codesandbox.io/s/unsplash-image-picker-example-c7jzs1?file=/src/App.js)
 
 ## Install
 
@@ -25,13 +25,13 @@ Package provide 2 component to search and choose image from unsplash images.
 
 ```tsx
 import React, { Component } from 'react'
-import { UnsplashImagePickerModal } from 'unsplash-image-picker'
+import UnsplashImagePickerModal from 'unsplash-image-picker'
 import 'unsplash-image-picker/dist/index.css'
 
 const App = () => {
   const [active, setActive] = React.useState(false)
   const unsplashAccessKey = 'UNSPLASH_ACCESS_KEY'
-  const [photos, setActivePhotos] = React.useState<>([])
+  const [photos, SetPhotos] = React.useState([])
   return (
     <div>
       <button
@@ -46,10 +46,10 @@ const App = () => {
         active={active}
         setActive={setActive}
         initialPhotoSearchQuery=''
-        onPhotoSelect={(photo: any) => {
-          let list = (photos ?? []) as any[]
+        onPhotoSelect={(photo) => {
+          let list = photos ?? []
           list.push(photo)
-          setActivePhotos(list)
+          SetPhotos(list)
           setActive(false)
         }}
       />
@@ -66,17 +66,17 @@ import 'unsplash-image-picker/dist/index.css'
 import { UnSplashImagePicker } from 'unsplash-image-picker'
 
 const App = () => {
-  const [photos, setPhotos] = React.useState<any[]>([])
+  const [photos, setPhotos] = React.useState([])
   const unsplashAccessKey = 'UNSPLASH_ACCESS_KEY'
   return (
     <div className='App '>
       <UnSplashImagePicker
         unsplashAccessKey={unsplashAccessKey}
         initialPhotoSearchQuery=''
-        onPhotoSelect={(photo: any) => {
-          let list = (photos ?? []) as any[]
+        onPhotoSelect={(photo) => {
+          let list = photos ?? []
           list.push(photo)
-          setPhotos(list)
+          SetPhotos(list)
         }}
       />
     </div>
@@ -86,7 +86,7 @@ const App = () => {
 export default App
 ```
 
-> To get UNSPLASH_ACCESS_KEY, you can register at [unsplash.com](https://unsplash.com/join)
+> To get UNSPLASH ACCESS KEY, you can register at [unsplash.com](https://unsplash.com/join)
 
 ## License
 

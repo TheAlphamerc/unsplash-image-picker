@@ -144,7 +144,7 @@ function PhotoList(_ref) {
   }, isLoading ? React.createElement("div", {
     className: 'flex items-center justify-center h-96'
   }, React.createElement(Loader, null)) : React.createElement("div", null, Array.isArray(photoList) && photoList.length > 0 && React.createElement("div", {
-    className: 'PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4',
+    className: 'PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4 pb-12',
     style: {
       maxHeight: listHeight
     },
@@ -156,13 +156,13 @@ function PhotoList(_ref) {
       photo: photo,
       onPhotoSelect: onPhotoSelect
     });
-  })), Array.isArray(photoList) && photoList.length === 0 && total === 0 && React.createElement("div", {
+  }), isLoadingMore && React.createElement("div", {
+    className: 'sm:col-span-2 md:col-span-3 my-4 flex justify-center'
+  }, React.createElement(Loader, null))), Array.isArray(photoList) && photoList.length === 0 && total === 0 && React.createElement("div", {
     className: 'flex items-center justify-center h-96'
   }, "No photos found"), !total && React.createElement("div", {
     className: 'flex items-center justify-center h-96 text-gray-600'
-  })), isLoadingMore && React.createElement("div", {
-    className: 'my-4 flex justify-center'
-  }, React.createElement(Loader, null)));
+  })));
 }
 
 function Loader() {
@@ -310,7 +310,7 @@ function ImagePicker(_ref) {
   }, React.createElement("div", {
     className: 'Picker relative h-full rounded'
   }, React.createElement("div", {
-    className: 'px-4 pt-4 font-bold text-lg bg-white'
+    className: 'px-4 pt-4 font-bold text-lg bg-white '
   }, ' ', "Search image"), React.createElement("div", {
     className: 'shadow p-4 bg-white'
   }, React.createElement("div", {

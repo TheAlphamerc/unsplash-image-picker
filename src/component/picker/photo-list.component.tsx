@@ -41,7 +41,7 @@ function PhotoList({
         <div>
           {Array.isArray(photoList) && photoList.length > 0 && (
             <div
-              className='PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4'
+              className='PhotoList grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 overflow-y-auto p-4 pb-12'
               style={{ maxHeight: listHeight }}
               ref={ref}
               onScroll={onScroll}
@@ -55,6 +55,11 @@ function PhotoList({
                   />
                 )
               })}
+              {isLoadingMore && (
+                <div className='sm:col-span-2 md:col-span-3 my-4 flex justify-center'>
+                  <Loader />
+                </div>
+              )}
             </div>
           )}
           {Array.isArray(photoList) &&
@@ -67,11 +72,6 @@ function PhotoList({
           {!total && (
             <div className='flex items-center justify-center h-96 text-gray-600' />
           )}
-        </div>
-      )}
-      {isLoadingMore && (
-        <div className='my-4 flex justify-center'>
-          <Loader />
         </div>
       )}
     </div>

@@ -731,6 +731,10 @@ video {
   padding-top: 1rem;
 }
 
+.pb-12 {
+  padding-bottom: 3rem;
+}
+
 .pl-3 {
   padding-left: 0.75rem;
 }
@@ -810,6 +814,9 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-2 {
+    grid-column: span 2/span 2;
+  }
   .sm\:h-44 {
     height: 11rem;
   }
@@ -822,6 +829,9 @@ video {
   }
 }
 @media (min-width: 768px) {
+  .md\:col-span-3 {
+    grid-column: span 3/span 3;
+  }
   .md\:h-32 {
     height: 8rem;
   }
@@ -844,11 +854,15 @@ video {
   display: block;
 }
 .Modal .Card {
-  margin: 0;
+  max-width: calc(-120px + 100vw);
+  max-height: calc(-119px + 100vh);
+  margin-right: auto;
+  margin-left: auto;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 60px;
+  right: 0px;
+  left: 0px;
+  overflow: hidden;
 }
 
 .spinner {
@@ -862,9 +876,10 @@ video {
 @media (min-width: 500px) {
   .card-columns {
     column-count: 1 !important;
+    overflow: hidden;
   }
 }
-@media (min-width: 740px) {
+@media (min-width: 640px) {
   .card-columns {
     column-count: 2 !important;
   }

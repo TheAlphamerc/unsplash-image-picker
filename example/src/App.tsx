@@ -4,6 +4,8 @@ import 'unsplash-image-picker/dist/index.css'
 import UnsplashImagePickerModal from 'unsplash-image-picker'
 import Photo from './component/photo'
 
+// type ControlProps = React.PropsWithChildren<{setVisible: (status: boolean) => void}>
+
 const App = () => {
   const [active, setActive] = React.useState(false)
   const [photos, setActivePhotos] = React.useState<any[]>([])
